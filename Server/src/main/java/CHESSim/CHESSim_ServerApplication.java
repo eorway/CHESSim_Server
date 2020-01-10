@@ -1,5 +1,6 @@
 package CHESSim;
 
+import CHESSim.resources.GameResource;
 import CHESSim.resources.LobbyResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -25,6 +26,7 @@ public class CHESSim_ServerApplication extends Application<CHESSim_ServerConfigu
     public void run(final CHESSim_ServerConfiguration configuration,
                     final Environment environment) {
         environment.jersey().register(new LobbyResource());
+        environment.jersey().register(new GameResource());
         // TODO: implement application
     }
 
