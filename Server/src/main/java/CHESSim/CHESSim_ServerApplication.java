@@ -1,5 +1,6 @@
 package CHESSim;
 
+import CHESSim.health.LobbyHealthCheck;
 import CHESSim.resources.GameResource;
 import CHESSim.resources.LobbyResource;
 import io.dropwizard.Application;
@@ -19,15 +20,18 @@ public class CHESSim_ServerApplication extends Application<CHESSim_ServerConfigu
 
     @Override
     public void initialize(final Bootstrap<CHESSim_ServerConfiguration> bootstrap) {
-        // TODO: application initialization
+
     }
 
     @Override
     public void run(final CHESSim_ServerConfiguration configuration,
                     final Environment environment) {
-        environment.jersey().register(new LobbyResource());
+    	
+    	LobbyResource lobbyresource = new LobbyResource();
+    	LobbyHealthCheck lobbyhealth = new LobbyHealthCheck(lobbyresource);
+        environment.jersey().register(lobbyresource);
+        environment.healthChecks().register("",lobbyhealth);
         environment.jersey().register(new GameResource());
-        // TODO: implement application
     }
 
 }
