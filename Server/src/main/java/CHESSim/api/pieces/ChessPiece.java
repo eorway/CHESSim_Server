@@ -1,14 +1,18 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.Game;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import CHESSim.core.Coordinate;
+import CHESSim.core.Game;
 
 public abstract class ChessPiece {
 	
 	public static enum Color{WHITE,BLACK};
 	
 	Color color;
+	@JsonIgnore
 	Coordinate coord;
+
 	char character;
 	
 	public ChessPiece(Color color,Coordinate coord)

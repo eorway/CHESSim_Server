@@ -1,6 +1,7 @@
 package CHESSim.core;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import CHESSim.api.pieces.Bishop;
@@ -15,10 +16,17 @@ import CHESSim.api.pieces.Tower;
 public class Game {
     ChessPiece[][] board = new ChessPiece[8][8];
     
+    static int nextID = 0;
+    
+    private int id;
+    
     Color turn = Color.WHITE;
     String history ="";
+    @JsonIgnore
     ChessGUI gui;
+    @JsonIgnore
     King whiteKing;
+    @JsonIgnore	
     King blackKing;
     
     //Das Feld, auf das ein Bauer von weiß schlagen kann 
@@ -27,6 +35,7 @@ public class Game {
     Coordinate enpassanteBlack=null; 
     
     public Game () {
+    	id = nextID++;
         reset();
     }
     
