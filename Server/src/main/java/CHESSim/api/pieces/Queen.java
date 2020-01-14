@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public class Queen extends ChessPiece{
@@ -12,7 +12,7 @@ public class Queen extends ChessPiece{
 	}
 	
 	
-	public boolean isMoveValid(Coordinate to,ChessBoard board)
+	public boolean checkMove(Coordinate to,Game board)
 	{
 		return Tower.isMoveValid(coord, to, board)||Bishop.isMoveValid(coord, to, board);
 	}

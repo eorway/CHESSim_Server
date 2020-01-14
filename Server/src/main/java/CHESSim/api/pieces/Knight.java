@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public class Knight extends ChessPiece{
@@ -11,7 +11,7 @@ public class Knight extends ChessPiece{
 		this.character = 'N';
 	}
 	
-	public boolean isMoveValid(Coordinate to,ChessBoard table)
+	public boolean checkMove(Coordinate to,Game table)
 	{
 		
 		

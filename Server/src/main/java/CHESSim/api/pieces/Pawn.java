@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public class Pawn extends ChessPiece{
@@ -21,7 +21,7 @@ public class Pawn extends ChessPiece{
 	
 	
 	
-	public boolean isMoveValid(Coordinate to, ChessBoard table)
+	public boolean checkMove(Coordinate to, Game table)
 	{
 		boolean result = false;
 		int xMove = to.getX()-coord.getX();

@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public abstract class ChessPiece {
@@ -34,7 +34,7 @@ public abstract class ChessPiece {
 		return character;
 	}
 
-	public abstract boolean isMoveValid(Coordinate coord, ChessBoard table);
+	public abstract boolean checkMove(Coordinate coord, Game table);
 	
 	public boolean equals(ChessPiece comparison)
 	{

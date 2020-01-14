@@ -27,7 +27,6 @@ public class CHESSim_ServerApplication extends Application<CHESSim_ServerConfigu
                     final Environment environment) {
         environment.jersey().register(new LobbyResource());
         environment.jersey().register(new GameResource());
-        // TODO: implement application
     }
 
 }

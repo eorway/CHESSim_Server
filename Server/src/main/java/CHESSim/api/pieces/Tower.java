@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public class Tower extends ChessPiece {
@@ -12,7 +12,7 @@ public class Tower extends ChessPiece {
 		this.character = 'R';
 	}
 	
-	public static boolean isMoveValid(Coordinate from, Coordinate to,ChessBoard table)
+	public static boolean isMoveValid(Coordinate from, Coordinate to,Game table)
 	{
 		ChessPiece[][] board = table.getBoard();
 		int xMove = to.getX()-from.getX();
@@ -47,7 +47,7 @@ public class Tower extends ChessPiece {
 	}
 	
 	@Override
-	public	boolean isMoveValid(Coordinate to, ChessBoard table) {
+	public	boolean checkMove(Coordinate to, Game table) {
 		
 		
 		return isMoveValid(coord, to,table);

@@ -1,6 +1,8 @@
 package CHESSim.core;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import CHESSim.api.pieces.Bishop;
 import CHESSim.api.pieces.ChessPiece;
 import CHESSim.api.pieces.ChessPiece.Color;
@@ -10,7 +12,7 @@ import CHESSim.api.pieces.Pawn;
 import CHESSim.api.pieces.Queen;
 import CHESSim.api.pieces.Tower;
 
-public class ChessBoard {
+public class Game {
     ChessPiece[][] board = new ChessPiece[8][8];
     
     Color turn = Color.WHITE;
@@ -24,11 +26,12 @@ public class ChessBoard {
     //Das Feld, auf das ein Bauer von Schwarz schlagen kann
     Coordinate enpassanteBlack=null; 
     
-    public ChessBoard () {
+    public Game () {
         reset();
     }
     
-    public ChessBoard(ChessGUI gui) {
+    // for Server use not necessary
+    public Game(ChessGUI gui) {
     	
     	this.gui = gui;
     	reset();
@@ -106,8 +109,7 @@ public class ChessBoard {
         }
 
         //check if its your turn
-        if(movingPiece.getColor() != turn)
-        {
+        if(movingPiece.getColor() != turn){
         	gui.showWarning("Error: It is not your turn");
         	return false;
         }       
@@ -118,32 +120,25 @@ public class ChessBoard {
         if (board[to.x][to.y] != null)
             capture = true;
 
-        // Wenn man wieder am Zug ist darf der Gegener im nchsten Zug nicht immernoch aufs gesetzte Feld schlagen, es msste ein neues Feld
-        // gesetzt werden
-        if(turn == Color.BLACK)
-        {
+        //in the second turn after the pawns advance the enemy must not be able to capture en passante
+        if(turn == Color.BLACK){
         	enpassanteWhite = null;
         }
-        else
-        {
+        else{
         	enpassanteBlack = null;
         }
         	
         // here we call the isMoveValid() method to determine if the move is valid
         // according to the logic of the specific piece.
         // Enpassantecoords will be set here
-        if (movingPiece.isMoveValid(to, this)) {
+        if (movingPiece.checkMove(to, this)) {
             
 
-            if (capture)
-            {
-            	if(board[to.x][to.y].getColor() != movingPiece.getColor())
-            	{
-            		 
+            if (capture){
+            	if(board[to.x][to.y].getColor() != movingPiece.getColor()) {
             		board[to.x][to.y] = null;
             	}
-            	else
-            	{
+            	else{
             		gui.showWarning("Diese Figur kann nicht geschlagen werden, sie ist von der selben Farbe");
             		return false;
             	}
@@ -155,28 +150,21 @@ public class ChessBoard {
             board[to.x][to.y] = board[from.x][from.y];
             board[from.x][from.y] = null;
             
-            if(turn == Color.WHITE)
-            {
+            if(turn == Color.WHITE){
             	turn = Color.BLACK;
-            	if(to.equals(enpassanteWhite))
-                {
+            	if(to.equals(enpassanteWhite)){
                 	board[to.x][4] = null;
                 }
-            	if(to.getY() == 7 && movingPiece.getCharacter() == 'P')
-            	{
+            	if(to.getY() == 7 && movingPiece.getCharacter() == 'P') {
             		pawnChange(to);
             	}
             }
-            else
-            {
-            	
+            else{
             	turn = Color.WHITE;
-            	if(to.equals(enpassanteBlack))
-                {
+            	if(to.equals(enpassanteBlack)) {
                 	board[to.x][3] = null;
                 }
-            	if(to.getY() == 0 && movingPiece.getCharacter() == 'P')
-            	{
+            	if(to.getY() == 0 && movingPiece.getCharacter() == 'P') {
             		pawnChange(to);
             	}
             }
@@ -191,15 +179,12 @@ public class ChessBoard {
         else {
         	// Wenn man wieder am Zug ist darf der Gegener im nhsten Zug nicht immernoch aufs gesetzte Feld schlagen, es mste ein neues Feld
             // gesetzt werden hier nochmal falls irrtmlicherweise versucht wurde mit einem Bauern 2 vor zu gehen
-            if(turn == Color.BLACK)
-            {
+            if(turn == Color.BLACK) {
             	enpassanteBlack = null;
             }
-            else
-            {
+            else {
             	enpassanteWhite = null;
             }
-           //gui.showWarning("Error: This move is invalid");
             return false;
         }
     }
@@ -253,6 +238,8 @@ public class ChessBoard {
 		return board;
 	}
 
+
+	@JsonProperty
 	public String getHistory() {
 		return history;
 	}
@@ -261,6 +248,7 @@ public class ChessBoard {
 		return enpassanteWhite;
 	}
 
+	
 	public Coordinate getEnpassanteBlack() {
 		return enpassanteBlack;
 	}
@@ -291,7 +279,7 @@ public class ChessBoard {
 			{
 				if(x != null)
 				{
-					if(x.getColor() != color && x.isMoveValid(kingField, this))
+					if(x.getColor() != color && x.checkMove(kingField, this))
 					{
 						result = true;						
 					}
@@ -305,6 +293,28 @@ public class ChessBoard {
 	public void pawnChange(Coordinate coord)
 	{
 		
+	}
+
+	
+	@JsonProperty
+	public Color getTurn() {
+		return turn;
+	}
+
+	@JsonProperty
+	public void setTurn(Color turn) {
+		this.turn = turn;
+	}
+
+	@JsonProperty
+	public void setBoard(ChessPiece[][] board) {
+		this.board = board;
+	}
+
+	@JsonProperty
+
+	public void setHistory(String history) {
+		this.history = history;
 	}
 	
 }

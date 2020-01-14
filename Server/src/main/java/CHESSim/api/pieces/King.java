@@ -1,6 +1,6 @@
 package CHESSim.api.pieces;
 
-import CHESSim.core.ChessBoard;
+import CHESSim.core.Game;
 import CHESSim.core.Coordinate;
 
 public class King extends ChessPiece{
@@ -11,7 +11,7 @@ public class King extends ChessPiece{
 		this.character = 'K';
 	}
 	
-	public boolean isMoveValid(Coordinate to,ChessBoard table)
+	public boolean checkMove(Coordinate to,Game table)
 	{
 		boolean result = false;
 		
@@ -44,7 +44,7 @@ public class King extends ChessPiece{
 		return result;
 	}
 	
-	public boolean checkRochade(Coordinate to, ChessBoard table)
+	public boolean checkRochade(Coordinate to, Game table)
 	{
 		boolean result = false;
 		//TODO history, bedrohtes Feld
