@@ -29,23 +29,17 @@ public class CHESSim_ServerApplication extends Application<CHESSim_ServerConfigu
 
     @Override
     public void initialize(final Bootstrap<CHESSim_ServerConfiguration> bootstrap) {
-    	
+
     	ObjectMapper jsonMapper = new ObjectMapper();
     	ArrayList<Game> games = new ArrayList();
-    	games.add(new Game());
-    	games.add(new Game());
-    	games.add(new Game());
-    	games.add(new Game());
-    	
+
     	File saveFile = new File("saveFile");
     	try {
 			saveFile.createNewFile();
-			jsonMapper.writeValue(saveFile, games);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+
     }
 
 
